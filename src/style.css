@@ -1,0 +1,12 @@
+window {
+    border-bottom: 10px;
+    border-radius: 10px;
+}
+
+headerbar {
+    border: none;
+}
+
+button.button1 {
+    background-color: red;
+}
