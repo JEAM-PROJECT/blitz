@@ -1,12 +1,21 @@
 window {
     border-bottom: 10px;
     border-radius: 10px;
+    background-color: cornflowerblue;
 }
 
 headerbar {
     border: none;
+    color: white;
+    background: transparent;
 }
 
 button.button1 {
     background-color: red;
+}
+
+button {
+    color: white;
+    background-color: grey;
+    padding: 2px 2px;
 }

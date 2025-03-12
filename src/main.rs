@@ -1,5 +1,5 @@
 use gtk::{gdk::Display, glib, Application, ApplicationWindow};
-use gtk::{prelude::*, Button, CssProvider, Text};
+use gtk::{prelude::*, CssProvider};
 
 const APP_ID: &str = "org.gtk_rs.HelloWorld2";
 
@@ -28,30 +28,12 @@ fn load_css() {
 }
 
 fn build_ui(app: &Application) {
-    let button = Button::builder()
-        .label("Click me!")
-        .halign(gtk::Align::Center)
-        .valign(gtk::Align::Center)
-        .build();
+    let ui_src = include_str!("window.ui");
+    let builder = gtk::Builder::from_string(ui_src);
 
-    button.add_css_class("button1");
-
-    button.connect_clicked(|button| {
-        button.set_label("Hello from my rust Apllication xd");
-    });
-
-    let text = Text::builder().editable(false).build();
-    text.set_text("Hello World");
-    // Create a window and set the title
-    let window = ApplicationWindow::builder()
-        .application(app)
-        .resizable(false)
-        .default_width(420)
-        .default_height(620)
-        .title("RustClean")
-        .child(&button)
-        .build();
-
-    // Present window
+    let window: ApplicationWindow = builder
+        .object::<gtk::ApplicationWindow>("window")
+        .expect("Couldn't get window");
+    app.add_window(&window);
     window.present();
 }

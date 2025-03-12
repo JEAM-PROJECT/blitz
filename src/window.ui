@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<interface>
+    <object class="GtkApplicationWindow" id="window">
+        <property name="default_width">420</property>
+        <property name="default_height">620</property>
+        <property name="resizable">False</property>
+        <property name="title"> </property>
+        <child type="titlebar">
+            <object class="GtkHeaderBar" id="headerbar">
+
+            </object>
+        </child>
+    </object>
+</interface>
