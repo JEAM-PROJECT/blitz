@@ -1,39 +1,81 @@
-use gtk::{gdk::Display, glib, Application, ApplicationWindow};
-use gtk::{prelude::*, CssProvider};
+#![allow(deprecated)]
 
-const APP_ID: &str = "org.gtk_rs.HelloWorld2";
+use std::convert::identity;
 
-fn main() -> glib::ExitCode {
-    // Create a new application
-    let app = Application::builder().application_id(APP_ID).build();
+use gtk::prelude::*;
+use relm4::prelude::*;
 
-    // Connect to "activate" signal of `app`
-    app.connect_activate(build_ui);
-    app.connect_startup(|_| load_css());
-
-    // Run the application
-    app.run()
+struct AppModel {
+    counter: u8,
 }
 
-fn load_css() {
-    let provider = CssProvider::new();
-    provider.load_from_string(include_str!("style.css"));
+struct Header;
 
-    // Add the provider to the default screen
-    gtk::style_context_add_provider_for_display(
-        &Display::default().expect("Could not connect to a display."),
-        &provider,
-        gtk::STYLE_PROVIDER_PRIORITY_APPLICATION,
-    );
+#[relm4::component]
+impl SimpleComponent for AppModel {
+    type Init = ();
+    type Input = ();
+    type Output = ();
+    type Root = gtk::Window;
+
+    view! {
+        gtk::HeaderBar {
+            #[wrap(Some)]
+            set_title_widget = &gtk::Box {
+                add_css_class: relm4::css::LINKED,
+                append: group = &gtk::ToggleButton {
+                    set_label: "View",
+                    set_active: true,
+                    connect_toggled[sender] => move |btn| {
+                        if btn.is_active() {
+                            sender.output(()).unwrap();
+                        }
+                    },
+                },
+                append = &gtk::ToggleButton {
+                    set_label: "Edición",
+                    set_group: Some(&group),
+                    connect_toggled[sender] => move |btn| {
+                        if btn.is_active() {
+                            sender.output(()).unwrap();
+                        }
+                    },
+                },
+                append = &gtk::ToggleButton {
+                    set_label: "Export",
+                    set_group: Some(&group),
+                    connect_toggled[sender] => move |btn| {
+                        if btn.is_active() {
+                            sender.output(()).unwrap();
+                        }
+                    },
+                },
+            }
+        }
+    }
+
+    fn init_root() -> Self::Root {
+        gtk::Window::builder()
+            .title("HeaderBar Example")
+            .default_width(300)
+            .default_height(200)
+            .build();
+    }
+
+    fn init(
+        _init: Self::Init,
+        root: Self::Root,
+        sender: ComponentSender<Self>,
+    ) -> ComponentParts<Self> {
+        let model = AppModel { counter: 0 };
+        let header = Header;
+        let widgets = view_output!();
+
+        ComponentParts { model, widgets }
+    }
 }
 
-fn build_ui(app: &Application) {
-    let ui_src = include_str!("window.ui");
-    let builder = gtk::Builder::from_string(ui_src);
-
-    let window: ApplicationWindow = builder
-        .object::<gtk::ApplicationWindow>("window")
-        .expect("Couldn't get window");
-    app.add_window(&window);
-    window.present();
+fn main() {
+    let app = RelmApp::new("relm4.example.widget_template");
+    app.run::<AppModel>(0);
 }

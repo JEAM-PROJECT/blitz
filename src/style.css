@@ -1,7 +1,8 @@
 window {
     border-bottom: 10px;
     border-radius: 10px;
-    background-color: cornflowerblue;
+    background-color: #141c2a;
+    box-shadow: none;
 }
 
 headerbar {
@@ -10,12 +11,13 @@ headerbar {
     background: transparent;
 }
 
-button.button1 {
-    background-color: red;
+button {
+    border: none;
+    color: white;
+    background-color: slategray;
+    padding: 1px;
 }
 
-button {
-    color: white;
-    background-color: grey;
-    padding: 2px 2px;
+.first_text {
+    color: red;
 }
