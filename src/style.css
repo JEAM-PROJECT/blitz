@@ -11,13 +11,29 @@ headerbar {
     background: transparent;
 }
 
-button {
-    border: none;
-    color: white;
-    background-color: slategray;
-    padding: 1px;
+.box1 {
+    background-color: #1f2937;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border: 0.4px solid;
+    border-right-color: #374151;
+    min-width: 100px;
+    min-height: 590px;
 }
 
-.first_text {
-    color: red;
+/*styles button cleaner*/
+.button_clear {
+    background: none;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    margin: 20px 10px;
+}
+
+.button_clear:hover {
+    background-color: #374151;
+}
+
+image {
+    color: white;
 }
