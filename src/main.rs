@@ -1,74 +1,29 @@
-#![allow(deprecated)]
-
-use std::convert::identity;
-
 use gtk::prelude::*;
 use relm4::prelude::*;
 
-struct AppModel {
-    counter: u8,
-}
-
-struct Header;
+struct App {}
 
 #[relm4::component]
-impl SimpleComponent for AppModel {
+impl SimpleComponent for App {
     type Init = ();
     type Input = ();
     type Output = ();
-    type Root = gtk::Window;
 
     view! {
-        gtk::HeaderBar {
-            #[wrap(Some)]
-            set_title_widget = &gtk::Box {
-                add_css_class: relm4::css::LINKED,
-                append: group = &gtk::ToggleButton {
-                    set_label: "View",
-                    set_active: true,
-                    connect_toggled[sender] => move |btn| {
-                        if btn.is_active() {
-                            sender.output(()).unwrap();
-                        }
-                    },
-                },
-                append = &gtk::ToggleButton {
-                    set_label: "Edición",
-                    set_group: Some(&group),
-                    connect_toggled[sender] => move |btn| {
-                        if btn.is_active() {
-                            sender.output(()).unwrap();
-                        }
-                    },
-                },
-                append = &gtk::ToggleButton {
-                    set_label: "Export",
-                    set_group: Some(&group),
-                    connect_toggled[sender] => move |btn| {
-                        if btn.is_active() {
-                            sender.output(()).unwrap();
-                        }
-                    },
-                },
-            }
+        main_window = gtk::ApplicationWindow {
+            set_default_size: (380, 620),
+            set_title: Some("Blitz"),
         }
     }
 
-    fn init_root() -> Self::Root {
-        gtk::Window::builder()
-            .title("HeaderBar Example")
-            .default_width(300)
-            .default_height(200)
-            .build();
-    }
-
     fn init(
-        _init: Self::Init,
+        init: Self::Init,
         root: Self::Root,
         sender: ComponentSender<Self>,
     ) -> ComponentParts<Self> {
-        let model = AppModel { counter: 0 };
-        let header = Header;
+        let model = App {};
+
+        // Insert the code generation of the view! macro here
         let widgets = view_output!();
 
         ComponentParts { model, widgets }
@@ -76,6 +31,6 @@ impl SimpleComponent for AppModel {
 }
 
 fn main() {
-    let app = RelmApp::new("relm4.example.widget_template");
-    app.run::<AppModel>(0);
+    let app = RelmApp::new("relm4.example.simple");
+    app.run::<App>(());
 }
