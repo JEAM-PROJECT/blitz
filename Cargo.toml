@@ -9,6 +9,7 @@ gdk = { version = "0.9.6", package = "gdk4", features = ["v4_16"] }
 relm4 = "0.9"
 relm4-components = "0.9"
 relm4-icons = "0.10.0-beta.1"
+rsvg = "0.4.0"
 
 [build-dependencies]
 relm4-icons-build = "0.10.0-beta.1"

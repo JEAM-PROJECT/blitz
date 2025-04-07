@@ -1,3 +1,7 @@
+* {
+    font-family: sans-serif, system-ui;
+}
+
 window {
     border-bottom: 10px;
     border-radius: 10px;
@@ -9,6 +13,16 @@ headerbar {
     border: none;
     color: white;
     background: transparent;
+}
+
+headerbar image {
+    /*background-color: red; */
+    padding: 1px;
+    color: white;
+}
+
+headerbar button:hover {
+    background-color: #374151;
 }
 
 .box1 {
@@ -34,6 +48,6 @@ headerbar {
     background-color: #374151;
 }
 
-image {
-    color: white;
+.logo {
+    min-height: 50px;
 }

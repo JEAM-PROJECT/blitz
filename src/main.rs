@@ -1,15 +1,48 @@
-use gdk::prelude::*;
 use gtk::prelude::*;
-use gtk::CssProvider;
-use gtk::StyleContext;
+use gtk::{glib, CssProvider};
+use relm4::gtk::{
+    gdk::Texture,
+    gdk_pixbuf::Pixbuf,
+    gio::{Cancellable, MemoryInputStream},
+    StyleContext,
+};
 use relm4::prelude::*;
 
-struct App {}
+mod clean;
+use clean::Clean;
+
+mod process;
+use process::Process;
+
+struct App {
+    mode: AppMode,
+    clean_component: Controller<Clean>, // 👈 agrega esto
+    process_component: Controller<Process>,
+}
+
+#[derive(Debug)]
+enum AppMode {
+    View1,
+    View2,
+}
+
+#[derive(Debug)]
+enum AppMsg {
+    SetMode(AppMode),
+}
+
+fn embedded_logo() -> Texture {
+    let bytes = include_bytes!("./assets/blitz.png");
+    let g_bytes = glib::Bytes::from(&bytes.to_vec());
+    let stream = MemoryInputStream::from_bytes(&g_bytes);
+    let pixbuf = Pixbuf::from_stream(&stream, Cancellable::NONE).unwrap();
+    Texture::for_pixbuf(&pixbuf)
+}
 
 #[relm4::component]
 impl SimpleComponent for App {
     type Init = ();
-    type Input = ();
+    type Input = AppMsg;
     type Output = ();
 
     view! {
@@ -19,35 +52,59 @@ impl SimpleComponent for App {
             set_title: Some("Blitz"),
 
             gtk::Box {
-                add_css_class: "box1",
-                set_orientation: gtk::Orientation::Vertical,
-                set_align: gtk::Align::Start,
+                set_orientation: gtk::Orientation::Horizontal,
 
-                gtk::Image {
-                    add_css_class: "image-logo",
-                    set_valign: gtk::Align::Center,
-                    set_margin_top: 20,
-                    set_margin_bottom: 20,
-                    set_margin_start: 20,
-                    set_margin_end: 20,
-                    set_icon_name: Some("src/blitz.svg"),
-                },
+                append = &gtk::Box {
+                    add_css_class: "box1",
+                    set_orientation: gtk::Orientation::Vertical,
+                    set_align: gtk::Align::Start,
+                    gtk::Image {
+                        add_css_class: "logo",
+                        set_paintable: Some(&embedded_logo()),
+                    },
 
-                gtk::Button {
-                    add_css_class: "button_clear",
-                    set_label: "Click me!",
-                    connect_clicked => {
-                        println!("Button clicked!");
+                    append: group = &gtk::Button {
+                        add_css_class: "button_clear",
+                        set_label: "Click me!",
+                        connect_clicked[sender] => move |_| {
+                                sender.input(AppMsg::SetMode(AppMode::View1));
+                                println!("Button clicked!");
+                        },
+                    },
+
+                    append = &gtk::Button {
+                        add_css_class: "button_clear",
+                        set_label: "Click me too!",
+                        connect_clicked[sender] => move |_| {
+                                sender.input(AppMsg::SetMode(AppMode::View2));
+                                println!("Button clicked!");
+                        }
                     },
                 },
 
-                gtk::Button {
-                    set_label: "Click me too!",
-                    connect_clicked => {
-                        println!("Button clicked too!");
+                append = &gtk::Box {
+                    #[watch]
+                    set_visible: matches!(model.mode, AppMode::View1),
+                    set_orientation: gtk::Orientation::Vertical,
+
+                    append = &gtk::Box {
+                        append = &gtk::Box {
+                            // Wrap Clean in a gtk::Box to satisfy the IsA<Widget> trait
+                            append = &gtk::Box {
+                                append = model.clean_component.widget(),
+
+                            },
+                        },
                     },
+                },
 
-
+                append = &gtk::Box {
+                    #[watch]
+                    set_visible: matches!(model.mode, AppMode::View2),
+                    set_orientation: gtk::Orientation::Vertical,
+                    append = &gtk::Box {
+                        append = model.process_component.widget(),
+                    }
                 },
             }
         }
@@ -58,7 +115,13 @@ impl SimpleComponent for App {
         root: Self::Root,
         sender: ComponentSender<Self>,
     ) -> ComponentParts<Self> {
-        let model = App {};
+        let clean_component = Clean::builder().launch(()).detach();
+        let process_component = Process::builder().launch(()).detach();
+        let model = App {
+            mode: AppMode::View1,
+            clean_component,
+            process_component,
+        };
 
         // Insert the code generation of the view! macro here
         let widgets = view_output!();
@@ -73,6 +136,14 @@ impl SimpleComponent for App {
         );
 
         ComponentParts { model, widgets }
+    }
+
+    fn update(&mut self, msg: Self::Input, _sender: ComponentSender<Self>) {
+        match msg {
+            AppMsg::SetMode(mode) => {
+                self.mode = mode;
+            }
+        }
     }
 }
 
