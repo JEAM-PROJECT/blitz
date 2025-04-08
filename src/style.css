@@ -51,3 +51,7 @@ headerbar button:hover {
 .logo {
     min-height: 50px;
 }
+
+.view {
+    background-color: #1F2937;
+}
