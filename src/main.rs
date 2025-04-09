@@ -104,7 +104,10 @@ impl SimpleComponent for App {
                     #[watch]
                     set_visible: matches!(model.mode, AppMode::View2),
                     set_orientation: gtk::Orientation::Vertical,
+                    set_align: gtk::Align::Center,
+                    
                     append = &gtk::Box {
+                        add_css_class: "view",
                         append = model.process_component.widget(),
                     }
                 },
