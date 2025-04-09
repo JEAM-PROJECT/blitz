@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=blitz
+Comment=blitz
+Exec=/usr/bin/blitz
+Icon=/usr/share/pixmaps/blitz.svg
+Terminal=false
+Type=Application
+Categories=Utility;
