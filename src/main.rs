@@ -62,14 +62,14 @@ impl SimpleComponent for App {
 
                     gtk::Picture {
                         add_css_class: "logo",
-                        set_paintable: Some(&embedded_logo("./src/assets/64x64/blitz.png")),
+                        set_paintable: Some(&embedded_logo("/usr/share/icons/hicolor/64x64/apps/blitz.png")),
                     },
 
                     append = &gtk::Button {
                         add_css_class: "button_action",
                         set_child: Some(&gtk::Picture::for_file(
                             &File::for_path(
-                                "./src/assets/scalable/clean.svg"
+                                "/usr/share/icons/hicolor/scalable/apps/clean.svg"
                             )
                         )),
                         connect_clicked[sender] => move |_| {
@@ -82,7 +82,7 @@ impl SimpleComponent for App {
                         add_css_class: "button_action",
                         set_child: Some(&gtk::Picture::for_file(
                             &File::for_path(
-                                "./src/assets/scalable/process.svg"
+                                "./usr/share/icons/hicolor/scalable/apps/process.svg"
                             )
                         )),
                         connect_clicked[sender] => move |_| {
@@ -161,6 +161,6 @@ impl SimpleComponent for App {
 }
 
 fn main() {
-    let app = RelmApp::new("com.gtk.blitz");
+    let app = RelmApp::new("blitz-cleaner");
     app.run::<App>(());
 }

@@ -1,5 +1,5 @@
 [package]
-name = "blitz"
+name = "blitz-cleaner"
 version = "0.1.0"
 edition = "2021"
 
@@ -17,7 +17,7 @@ relm4-icons-build = "0.10.0-beta.1"
 
 
 [package.metadata.generate-rpm]
-name = "blitz"
+name = "blitz-cleaner"
 version = "0.1.0"
 license = "MIT"
 summary = "A simple cleaner for your linux system"
@@ -27,6 +27,8 @@ assets = [
     { source = "target/release/blitz", dest = "/usr/bin/blitz", mode = "755" },
     { source = "./blitz.desktop", dest = "/usr/share/applications/blitz.desktop", mode = "644" },
     { source = "./src/assets/scalable/blitz.svg", dest = "/usr/share/icons/hicolor/scalable/apps/blitz.svg", mode = "644" },
-    { source = "./src/assets/scalable/", dest = "/usr/share/icons/hicolor/scalable/apps/", mode = "644" },
-    { source = "./src/assets/64x64/", dest = "/usr/share/icons/hicolor/64x64/apps/", mode = "644" },
+    { source = "./src/assets/scalable/clean.svg", dest = "/usr/share/icons/hicolor/scalable/apps/clean.svg", mode = "644" },
+    { source = "./src/assets/scalable/process.svg", dest = "/usr/share/icons/hicolor/scalable/apps/process.svg", mode = "644" },
+    { source = "./src/assets/64x64/blitz.png", dest = "/usr/share/icons/hicolor/64x64/apps/blitz.png", mode = "644" },
+    { source = "./src/assets/64x64/storage.png", dest = "/usr/share/icons/hicolor/64x64/apps/storage.png", mode = "644" },
 ]
