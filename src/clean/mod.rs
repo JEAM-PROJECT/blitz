@@ -66,7 +66,7 @@ impl SimpleComponent for Clean {
 
                 append = &gtk::Label {
                     add_css_class: "status_text",
-                    set_label: "Status: ",
+                    set_label: "Status",
                 },
             },
 

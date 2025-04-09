@@ -10,6 +10,13 @@
     padding: 10px;
 }
 
+.status_text {
+    font-size: 1.3em;
+    color: white;
+    font-weight: bolder;
+    margin-top: 10px;
+}
+
 .status_box {
     background-color: #1f2937;
     margin-left: 15px;
