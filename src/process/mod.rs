@@ -7,14 +7,18 @@ use relm4::gtk::{
     StyleContext,
 };
 use relm4::prelude::*;
+use glib::clone;
 
 use sysinfo::{
     Components, Disks, Networks, System,
 };
 
+mod process_info; // Importar el módulo process_info
+use process_info::get_processes_info; // Importar la función
+
 #[derive(Default)]
 pub struct Process {
-    first_process: Option<String>,
+    processes: Vec<String>, // Cambiar a una lista de procesos
 }
 
 #[relm4::component(pub)]
@@ -28,16 +32,38 @@ impl SimpleComponent for Process {
         root: Self::Root,
         _sender: relm4::ComponentSender<Self>,
     ) -> relm4::ComponentParts<Self> {
-        let mut sys = System::new_all();
-        sys.refresh_all();
+        let processes = get_processes_info(); // Usar la función para obtener los procesos
+        let model = Process { processes };
 
-        let first_process = sys
-            .processes()
-            .values()
-            .next()
-            .map(|process| format!("{:?} \nCPU {:.2}% \nRAM {} GB", process.name(), process.cpu_usage(), process.memory()/1048576));
+        // Crear dinámicamente las filas de la lista
+        let list_box = gtk::ListBox::new();
+        
+        for process in &model.processes {
+            let row = gtk::ListBoxRow::new();
+            let hbox = gtk::Box::new(gtk::Orientation::Horizontal, 10);
+    
+            // Etiqueta para mostrar el nombre del proceso
+            let label = gtk::Label::new(Some(process));
+            label.set_margin_all(5);
+    
+            // Botón para cada proceso
+            let button = gtk::Button::with_label("X");
+            button.connect_clicked(clone!(@strong process => move |_| {
+                println!("Button clicked for process: {}", process);
+            }));
+    
+            // Agregar la etiqueta y el botón al contenedor horizontal
+            hbox.append(&label);
+            hbox.append(&button);
+    
+            // Establecer el contenedor como hijo de la fila
+            row.set_child(Some(&hbox));
+            list_box.append(&row);
+        }
 
-        let model = Process { first_process };
+        root.append(&gtk::Label::new(Some("Process Administrator")));
+        root.append(&list_box);
+        
         let widgets = view_output!();
 
         let provider = CssProvider::new();
@@ -55,27 +81,7 @@ impl SimpleComponent for Process {
         gtk::Box {
             add_css_class: "process",
             set_orientation: gtk::Orientation::Vertical,
-            set_spacing: 10,
-
-            append = &gtk::Label {
-                set_label: "Process Administrator",
-                set_margin_top: 10,
-                set_margin_bottom: 10,
-            },
-
-            append = &gtk::Label {
-                #[watch]
-                set_label: model.first_process.as_deref().unwrap_or("No processes found"),
-                set_margin_top: 10,
-                set_margin_bottom: 10,
-            },
-
-            append = &gtk::Button {
-                set_label: "Proceso 1",
-                connect_clicked => |_| {
-                    println!("Button clicked!");
-                },
-            },
+            set_spacing: 10,     
         }
     }
 }
