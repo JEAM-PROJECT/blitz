@@ -8,6 +8,22 @@ use relm4::gtk::{
 };
 use relm4::prelude::*;
 
+const LOGO_BYTES: &[u8] = include_bytes!("./assets/blitz.png");
+//this function loads the image from the file system and creates a Texture from it
+pub fn embedded_logo_2() -> Texture {
+    // Ya no leemos del sistema de archivos, usamos los bytes incrustados
+    // let bytes = std::fs::read(picture).expect("Failed to read image file"); // <-- Eliminar
+
+    let g_bytes = glib::Bytes::from_static(LOGO_BYTES); // Usar from_static para &[u8]
+    let stream = MemoryInputStream::from_bytes(&g_bytes);
+
+    // Es mejor manejar el error aquí que usar unwrap()
+    let pixbuf = Pixbuf::from_stream(&stream, gtk::gio::Cancellable::NONE)
+        .expect("Failed to create Pixbuf from embedded stream"); // Mensaje más específico
+
+    Texture::for_pixbuf(&pixbuf)
+}
+
 //views
 mod clean;
 use clean::Clean;
@@ -54,7 +70,7 @@ impl SimpleComponent for App {
 
                     gtk::Picture {
                         add_css_class: "logo",
-                        set_paintable: Some(&clean::embedded_logo("./src/assets/blitz.png")),
+                        set_paintable: Some(&embedded_logo_2()),
                     },
 
                     append = &gtk::Button {
