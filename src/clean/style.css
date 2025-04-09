@@ -120,3 +120,11 @@
 .cache_button:hover {
     background-color: #374151;
 }
+
+spinner {
+    margin-top: 10px;
+    margin-left: 15px;
+    color: white;
+    font-weight: bolder;
+    font-size: 1.3em;
+}
