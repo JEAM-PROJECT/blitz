@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=blitz
+Comment=A simple cleaner for your linux system
+Exec=/usr/bin/blitz
+Icon=./src/assets/blitz.png
+Terminal=false
+Categories=Utility;

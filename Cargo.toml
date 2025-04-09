@@ -10,6 +10,21 @@ relm4 = "0.9"
 relm4-components = "0.9"
 relm4-icons = "0.10.0-beta.1"
 rsvg = "0.4.0"
+sysinfo = "0.34.2"
 
 [build-dependencies]
 relm4-icons-build = "0.10.0-beta.1"
+
+
+[package.metadata.generate-rpm]
+name = "blitz"
+version = "0.1.0"
+license = "MIT"
+summary = "A simple cleaner for your linux system"
+url = "https://github.com/JEAM-PROJECT/blitz"
+
+assets = [
+    { source = "target/release/blitz", dest = "/usr/bin/blitz", mode = "755" },
+    { source = "./blitz.desktop", dest = "/usr/share/applications/blitz.desktop", mode = "644" },
+    { source = "./src/assets/blitz.png", dest = "/usr/share/icons/hicolor/blitz.png", mode = "644" },
+]

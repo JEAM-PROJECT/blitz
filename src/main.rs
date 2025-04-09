@@ -3,11 +3,12 @@ use gtk::{glib, CssProvider};
 use relm4::gtk::{
     gdk::Texture,
     gdk_pixbuf::Pixbuf,
-    gio::{Cancellable, MemoryInputStream},
+    gio::{Cancellable, File, MemoryInputStream},
     StyleContext,
 };
 use relm4::prelude::*;
 
+//views
 mod clean;
 use clean::Clean;
 
@@ -31,14 +32,6 @@ enum AppMsg {
     SetMode(AppMode),
 }
 
-fn embedded_logo() -> Texture {
-    let bytes = include_bytes!("./assets/blitz.png");
-    let g_bytes = glib::Bytes::from(&bytes.to_vec());
-    let stream = MemoryInputStream::from_bytes(&g_bytes);
-    let pixbuf = Pixbuf::from_stream(&stream, Cancellable::NONE).unwrap();
-    Texture::for_pixbuf(&pixbuf)
-}
-
 #[relm4::component]
 impl SimpleComponent for App {
     type Init = ();
@@ -55,17 +48,22 @@ impl SimpleComponent for App {
                 set_orientation: gtk::Orientation::Horizontal,
 
                 append = &gtk::Box {
-                    add_css_class: "box1",
+                    add_css_class: "side_bar",
                     set_orientation: gtk::Orientation::Vertical,
                     set_align: gtk::Align::Start,
-                    gtk::Image {
+
+                    gtk::Picture {
                         add_css_class: "logo",
-                        set_paintable: Some(&embedded_logo()),
+                        set_paintable: Some(&clean::embedded_logo("./src/assets/blitz.png")),
                     },
 
-                    append: group = &gtk::Button {
-                        add_css_class: "button_clear",
-                        set_label: "Click me!",
+                    append = &gtk::Button {
+                        add_css_class: "button_action",
+                        set_child: Some(&gtk::Picture::for_file(
+                            &File::for_path(
+                                "./src/assets/clean.svg"
+                            )
+                        )),
                         connect_clicked[sender] => move |_| {
                                 sender.input(AppMsg::SetMode(AppMode::View1));
                                 println!("Button clicked!");
@@ -73,8 +71,12 @@ impl SimpleComponent for App {
                     },
 
                     append = &gtk::Button {
-                        add_css_class: "button_clear",
-                        set_label: "Click me too!",
+                        add_css_class: "button_action",
+                        set_child: Some(&gtk::Picture::for_file(
+                            &File::for_path(
+                                "./src/assets/process.svg"
+                            )
+                        )),
                         connect_clicked[sender] => move |_| {
                                 sender.input(AppMsg::SetMode(AppMode::View2));
                                 println!("Button clicked!");

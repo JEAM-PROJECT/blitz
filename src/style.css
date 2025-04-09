@@ -25,29 +25,31 @@ headerbar button:hover {
     background-color: #374151;
 }
 
-.box1 {
+.side_bar {
     background-color: #1f2937;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
     border: 0.4px solid;
     border-right-color: #374151;
-    min-width: 100px;
     min-height: 590px;
+    padding-right: 10px;
+    padding-left: 10px;
 }
 
 /*styles button cleaner*/
-.button_clear {
+.button_action {
     background: none;
     border: none;
     color: white;
-    border-radius: 5px;
-    margin: 20px 10px;
+    border-radius: 10px;
+    padding: 8px;
+    margin-top: 20px;
 }
 
-.button_clear:hover {
+.button_action:hover {
     background-color: #374151;
 }
 
 .logo {
-    min-height: 50px;
+    margin-top: 10px;
 }
