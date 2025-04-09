@@ -105,7 +105,7 @@ impl SimpleComponent for App {
                     set_visible: matches!(model.mode, AppMode::View2),
                     set_orientation: gtk::Orientation::Vertical,
                     set_align: gtk::Align::Center,
-                    
+
                     append = &gtk::Box {
                         add_css_class: "view",
                         append = model.process_component.widget(),
@@ -153,6 +153,6 @@ impl SimpleComponent for App {
 }
 
 fn main() {
-    let app = RelmApp::new("relm4.example.simple");
+    let app = RelmApp::new("com.gtk.blitz");
     app.run::<App>(());
 }
