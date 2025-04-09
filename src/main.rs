@@ -8,19 +8,11 @@ use relm4::gtk::{
 };
 use relm4::prelude::*;
 
-const LOGO_BYTES: &[u8] = include_bytes!("./assets/blitz.png");
-//this function loads the image from the file system and creates a Texture from it
-pub fn embedded_logo_2() -> Texture {
-    // Ya no leemos del sistema de archivos, usamos los bytes incrustados
-    // let bytes = std::fs::read(picture).expect("Failed to read image file"); // <-- Eliminar
-
-    let g_bytes = glib::Bytes::from_static(LOGO_BYTES); // Usar from_static para &[u8]
+pub fn embedded_logo(picture: &str) -> Texture {
+    let bytes = std::fs::read(picture).expect("Failed to read image file");
+    let g_bytes = glib::Bytes::from(&bytes);
     let stream = MemoryInputStream::from_bytes(&g_bytes);
-
-    // Es mejor manejar el error aquí que usar unwrap()
-    let pixbuf = Pixbuf::from_stream(&stream, gtk::gio::Cancellable::NONE)
-        .expect("Failed to create Pixbuf from embedded stream"); // Mensaje más específico
-
+    let pixbuf = Pixbuf::from_stream(&stream, Cancellable::NONE).unwrap();
     Texture::for_pixbuf(&pixbuf)
 }
 
@@ -70,14 +62,14 @@ impl SimpleComponent for App {
 
                     gtk::Picture {
                         add_css_class: "logo",
-                        set_paintable: Some(&embedded_logo_2()),
+                        set_paintable: Some(&embedded_logo("./src/assets/64x64/blitz.png")),
                     },
 
                     append = &gtk::Button {
                         add_css_class: "button_action",
                         set_child: Some(&gtk::Picture::for_file(
                             &File::for_path(
-                                "./src/assets/clean.svg"
+                                "./src/assets/scalable/clean.svg"
                             )
                         )),
                         connect_clicked[sender] => move |_| {
@@ -90,7 +82,7 @@ impl SimpleComponent for App {
                         add_css_class: "button_action",
                         set_child: Some(&gtk::Picture::for_file(
                             &File::for_path(
-                                "./src/assets/process.svg"
+                                "./src/assets/scalable/process.svg"
                             )
                         )),
                         connect_clicked[sender] => move |_| {

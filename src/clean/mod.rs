@@ -3,7 +3,7 @@ use gtk::CssProvider;
 use relm4::gtk::{
     gdk::Texture,
     gdk_pixbuf::Pixbuf,
-    gio::{Cancellable, File, MemoryInputStream},
+    gio::{Cancellable, MemoryInputStream},
     glib, StyleContext,
 };
 use relm4::prelude::*;
@@ -24,19 +24,12 @@ fn get_disks() -> Option<DiskInfo> {
     None
 }
 
-const LOGO_BYTES: &[u8] = include_bytes!("../assets/storage.png");
 //this function loads the image from the file system and creates a Texture from it
-pub fn embedded_logo() -> Texture {
-    // Ya no leemos del sistema de archivos, usamos los bytes incrustados
-    // let bytes = std::fs::read(picture).expect("Failed to read image file"); // <-- Eliminar
-
-    let g_bytes = glib::Bytes::from_static(LOGO_BYTES); // Usar from_static para &[u8]
+pub fn embedded_logo(picture: &str) -> Texture {
+    let bytes = std::fs::read(picture).expect("Failed to read image file");
+    let g_bytes = glib::Bytes::from(&bytes);
     let stream = MemoryInputStream::from_bytes(&g_bytes);
-
-    // Es mejor manejar el error aquí que usar unwrap()
-    let pixbuf = Pixbuf::from_stream(&stream, gtk::gio::Cancellable::NONE)
-        .expect("Failed to create Pixbuf from embedded stream"); // Mensaje más específico
-
+    let pixbuf = Pixbuf::from_stream(&stream, Cancellable::NONE).unwrap();
     Texture::for_pixbuf(&pixbuf)
 }
 
@@ -94,7 +87,7 @@ impl SimpleComponent for Clean {
 
                     append = &gtk::Picture {
                         add_css_class: "storage_icon",
-                        set_paintable: Some(&embedded_logo()),
+                        set_paintable: Some(&embedded_logo("./src/assets/64x64/storage.png")),
                     },
                 },
 

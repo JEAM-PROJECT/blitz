@@ -26,5 +26,7 @@ url = "https://github.com/JEAM-PROJECT/blitz"
 assets = [
     { source = "target/release/blitz", dest = "/usr/bin/blitz", mode = "755" },
     { source = "./blitz.desktop", dest = "/usr/share/applications/blitz.desktop", mode = "644" },
-    { source = "./src/assets/blitz.svg", dest = "/usr/share/icons/hicolor/scalable/apps/blitz.svg", mode = "644" },
+    { source = "./src/assets/scalable/blitz.svg", dest = "/usr/share/icons/hicolor/scalable/apps/blitz.svg", mode = "644" },
+    { source = "./src/assets/scalable/", dest = "/usr/share/icons/hicolor/scalable/apps/", mode = "644" },
+    { source = "./src/assets/64x64/", dest = "/usr/share/icons/hicolor/64x64/apps/", mode = "644" },
 ]
