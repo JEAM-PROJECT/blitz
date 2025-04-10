@@ -146,21 +146,7 @@ impl SimpleComponent for Clean {
                         add_css_class: "cleaner_text_cache_desc",
                         set_label: "Free up temporaly files",
                     },
-
-
                 }
-
-            //append = &gtk::Button {
-              //      add_css_class: "cleaner_button",
-                //    set_label: "Clean Now",
-                  //  connect_clicked => move |_| {
-                    //    let _output = Command::new("sh")
-                      //      .arg("-c")
-                        //    .arg("rm -rf /tmp/*")
-                          //  .output()
-                            //.expect("Failed to execute command");
-                            //},
-                            //},
             },
         }
     }
