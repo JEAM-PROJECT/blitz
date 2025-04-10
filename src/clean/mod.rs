@@ -88,7 +88,7 @@ impl SimpleComponent for Clean {
 
                     append = &gtk::Picture {
                         add_css_class: "storage_icon",
-                        set_paintable: Some(&embedded_logo("/usr/share/icons/hicolor/64x64/apps/storage.png")),
+                        set_paintable: Some(&embedded_logo("src/assets/64x64/storage.png")),
                     },
                 },
 

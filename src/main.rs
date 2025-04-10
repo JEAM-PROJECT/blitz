@@ -62,14 +62,14 @@ impl SimpleComponent for App {
 
                     gtk::Picture {
                         add_css_class: "logo",
-                        set_paintable: Some(&embedded_logo("/usr/share/icons/hicolor/64x64/apps/blitz.png")),
+                        set_paintable: Some(&embedded_logo("src/assets/64x64/blitz.png")),
                     },
 
                     append = &gtk::Button {
                         add_css_class: "button_action",
                         set_child: Some(&gtk::Picture::for_file(
                             &File::for_path(
-                                "/usr/share/icons/hicolor/scalable/apps/clean.svg"
+                                "src/assets/scalable/clean.svg"
                             )
                         )),
                         connect_clicked[sender] => move |_| {
@@ -82,7 +82,7 @@ impl SimpleComponent for App {
                         add_css_class: "button_action",
                         set_child: Some(&gtk::Picture::for_file(
                             &File::for_path(
-                                "/usr/share/icons/hicolor/scalable/apps/process.svg"
+                                "src/assets/scalable/process.svg"
                             )
                         )),
                         connect_clicked[sender] => move |_| {
