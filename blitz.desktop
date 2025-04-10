@@ -1,9 +1,10 @@
 [Desktop Entry]
 Version=1.0
 Type=Application
-Name=blitz cleaner
+Name=Blitz Cleaner
 Comment=A simple cleaner for your linux system
-Exec=/usr/bin/blitz
-Icon=/usr/share/icons/hicolor/scalable/apps/blitz.svg
+Exec=/usr/bin/blitz-cleaner
+Icon=blitz
 Terminal=false
 Categories=Utility;
+StartupWMClass=com.gtk.blitz-cleaner

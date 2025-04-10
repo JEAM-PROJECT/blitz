@@ -24,7 +24,7 @@ summary = "A simple cleaner for your linux system"
 url = "https://github.com/JEAM-PROJECT/blitz"
 
 assets = [
-    { source = "target/release/blitz", dest = "/usr/bin/blitz", mode = "755" },
+    { source = "target/release/blitz-cleaner", dest = "/usr/bin/blitz-cleaner", mode = "755" },
     { source = "./blitz.desktop", dest = "/usr/share/applications/blitz.desktop", mode = "644" },
     { source = "./src/assets/scalable/blitz.svg", dest = "/usr/share/icons/hicolor/scalable/apps/blitz.svg", mode = "644" },
     { source = "./src/assets/scalable/clean.svg", dest = "/usr/share/icons/hicolor/scalable/apps/clean.svg", mode = "644" },

@@ -82,7 +82,7 @@ impl SimpleComponent for App {
                         add_css_class: "button_action",
                         set_child: Some(&gtk::Picture::for_file(
                             &File::for_path(
-                                "./usr/share/icons/hicolor/scalable/apps/process.svg"
+                                "/usr/share/icons/hicolor/scalable/apps/process.svg"
                             )
                         )),
                         connect_clicked[sender] => move |_| {
@@ -161,6 +161,6 @@ impl SimpleComponent for App {
 }
 
 fn main() {
-    let app = RelmApp::new("blitz-cleaner");
+    let app = RelmApp::new("com.gtk.blitz-cleaner");
     app.run::<App>(());
 }
