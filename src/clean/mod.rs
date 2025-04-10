@@ -10,7 +10,7 @@ use relm4::prelude::*;
 use std::process::Command;
 use sysinfo::{Disks, System};
 
-//this function gets the disk information
+/// This function retrieves the disk information.
 fn get_disks() -> Option<DiskInfo> {
     let mut sys = System::new_all();
     sys.refresh_all();
@@ -24,7 +24,7 @@ fn get_disks() -> Option<DiskInfo> {
     None
 }
 
-//this function loads the image from the file system and creates a Texture from it
+/// This function loads an image from the file system and creates a Texture from it.
 pub fn embedded_logo(picture: &str) -> Texture {
     let bytes = std::fs::read(picture).expect("Failed to read image file");
     let g_bytes = glib::Bytes::from(&bytes);
@@ -33,12 +33,14 @@ pub fn embedded_logo(picture: &str) -> Texture {
     Texture::for_pixbuf(&pixbuf)
 }
 
+/// Struct to hold disk information.
 #[derive(Default)]
 struct DiskInfo {
     total_space: u64,
     available_space: u64,
 }
 
+/// Main struct for the Clean component.
 #[derive(Default)]
 pub struct Clean {
     disk_info: DiskInfo,
@@ -74,7 +76,6 @@ impl SimpleComponent for Clean {
                 add_css_class: "storage_box",
                 set_orientation: gtk::Orientation::Vertical,
 
-
                 append = &gtk::Box {
                     set_align: gtk::Align::Start,
                     add_css_class: "storage_text_icon_box",
@@ -90,7 +91,6 @@ impl SimpleComponent for Clean {
                         set_paintable: Some(&embedded_logo("/usr/share/icons/hicolor/64x64/apps/storage.png")),
                     },
                 },
-
 
                 append = &gtk::LevelBar {
                     set_align: gtk::Align::Start,
