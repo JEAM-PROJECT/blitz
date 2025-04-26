@@ -146,7 +146,7 @@ impl SimpleComponent for Clean {
                         add_css_class: "cleaner_text_cache_desc",
                         set_label: "Free up temporaly files",
                     },
-                }
+                },
             },
         }
     }

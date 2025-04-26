@@ -1,3 +1,5 @@
+use gtk::builders::ApplicationWindowBuilder;
+use gtk::ffi::GtkApplicationWindow;
 use gtk::prelude::*;
 use gtk::{glib, CssProvider};
 use relm4::gtk::{
