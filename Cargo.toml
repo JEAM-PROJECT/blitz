@@ -1,11 +1,12 @@
 [package]
 name = "blitz-cleaner"
+authors = ["adair", "xooseph"]
 version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-gtk = { version = "0.9.6", package = "gtk4", features = ["v4_16"] }
-gdk = { version = "0.9.6", package = "gdk4", features = ["v4_16"] }
+gtk = { version = "0.9.6", package = "gtk4", features = ["v4_10"] }
+gdk = { version = "0.9.6", package = "gdk4", features = ["v4_10"] }
 relm4 = "0.9"
 relm4-components = "0.9"
 relm4-icons = "0.10.0-beta.1"
@@ -22,6 +23,20 @@ version = "0.1.0"
 license = "MIT"
 summary = "A simple cleaner for your linux system"
 url = "https://github.com/JEAM-PROJECT/blitz"
+
+assets = [
+    { source = "target/release/blitz-cleaner", dest = "/usr/bin/blitz-cleaner", mode = "755" },
+    { source = "./blitz.desktop", dest = "/usr/share/applications/blitz.desktop", mode = "644" },
+    { source = "./src/assets/scalable/blitz.svg", dest = "/usr/share/icons/hicolor/scalable/apps/blitz.svg", mode = "644" },
+    { source = "./src/assets/scalable/clean.svg", dest = "/usr/share/icons/hicolor/scalable/apps/clean.svg", mode = "644" },
+    { source = "./src/assets/scalable/process.svg", dest = "/usr/share/icons/hicolor/scalable/apps/process.svg", mode = "644" },
+    { source = "./src/assets/64x64/blitz.png", dest = "/usr/share/icons/hicolor/64x64/apps/blitz.png", mode = "644" },
+    { source = "./src/assets/64x64/storage.png", dest = "/usr/share/icons/hicolor/64x64/apps/storage.png", mode = "644" },
+]
+
+[package.metadata.deb]
+maintainer = "Joseph Salgado <josephlsalgado@oulook.com"
+extended-description = "A simple cleaner for your linux system"
 
 assets = [
     { source = "target/release/blitz-cleaner", dest = "/usr/bin/blitz-cleaner", mode = "755" },
