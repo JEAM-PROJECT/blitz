@@ -101,7 +101,6 @@ impl SimpleComponent for Clean {
                 },
 
                 append = &gtk::Label {
-                    #[watch]
                     set_align: gtk::Align::Start,
                     add_css_class: "size_text",
                     set_label: &format!("{} GB used of {} GB", (model.disk_info.total_space - model.disk_info.available_space), model.disk_info.total_space)
