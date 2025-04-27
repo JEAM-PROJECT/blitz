@@ -38,7 +38,6 @@
 
 .storage_text_icon_box {
     margin-top: 10px;
-    min-width: 200px;
     color: white;
     font-weight: bolder;
     font-size: 1.3em;
@@ -49,7 +48,7 @@
 }
 
 .storage_icon {
-    
+    margin-left: 102px;
 }
 
 .storage_bar {
