@@ -15,14 +15,9 @@ headerbar {
     background: transparent;
 }
 
-headerbar image {
-    /*background-color: red; */
-    padding: 1px;
+headerbar button {
+    border-radius: 50%;
     color: white;
-}
-
-headerbar button:hover {
-    background-color: #374151;
 }
 
 .side_bar {

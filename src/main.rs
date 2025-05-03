@@ -101,7 +101,6 @@ impl SimpleComponent for App {
 
                     append = &gtk::Box {
                         append = &gtk::Box {
-                            // Wrap Clean in a gtk::Box to satisfy the IsA<Widget> trait
                             append = &gtk::Box {
                                 append = model.clean_component.widget(),
 
