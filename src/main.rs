@@ -117,7 +117,6 @@ impl SimpleComponent for App {
                     set_align: gtk::Align::Center,
 
                     append = &gtk::Box {
-                        add_css_class: "view",
                         append = model.process_component.widget(),
                     }
                 },
