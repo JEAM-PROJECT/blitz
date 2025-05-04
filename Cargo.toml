@@ -5,13 +5,13 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-gtk = { version = "0.9.6", package = "gtk4", features = ["v4_18"] }
-gdk = { version = "0.9.6", package = "gdk4", features = ["v4_18"] }
+gtk = { version = "0.9.6", package = "gtk4", features = ["v4_10"] }
+gdk = { version = "0.9.6", package = "gdk4", features = ["v4_10"] }
 relm4 = "0.9"
 relm4-components = "0.9"
 relm4-icons = "0.10.0-beta.1"
 rsvg = "0.4.0"
-sysinfo = "0.34.2"
+sysinfo = "0.35.0"
 
 [build-dependencies]
 relm4-icons-build = "0.10.0-beta.1"
