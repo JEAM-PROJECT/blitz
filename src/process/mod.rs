@@ -96,9 +96,9 @@ impl SimpleComponent for Process {
                         add_css_class: "process_header_box",
                         set_orientation: gtk::Orientation::Horizontal,
 
-                        append = &gtk::Picture {
-                            add_css_class: "process_info_icon",
-                            set_paintable: Some(&embedded_logo("src/assets/64x64/storage.png")),
+                        append = &gtk::Image {
+                            set_icon_name: Some("google-chrome"),
+                            set_pixel_size: 28,
                         },
 
                         append = &gtk::Label {
@@ -128,6 +128,23 @@ impl SimpleComponent for Process {
                         append = &gtk::Label {
                             add_css_class: "process_info_tag_text",
                             set_label: "CPU:",
+                        },
+
+                        append = &gtk::Box {
+                            set_hexpand: true,
+                            set_halign: gtk::Align::Fill,
+                        },
+
+                        append = &gtk::LevelBar {
+                            add_css_class: "process_info_bar",
+                            set_value: 0.5,
+                            set_min_value: 0.0,
+                            set_max_value: 1.0,
+                        },
+
+                        append = &gtk::Label {
+                            add_css_class: "process_info_value_text",
+                            set_label: "50%",
                         }
                     },
 
