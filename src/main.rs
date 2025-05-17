@@ -1,25 +1,11 @@
-use gtk::builders::ApplicationWindowBuilder;
-use gtk::ffi::GtkApplicationWindow;
 use gtk::prelude::*;
-use gtk::{glib, CssProvider};
-use relm4::gtk::{
-    gdk::Texture,
-    gdk_pixbuf::Pixbuf,
-    gio::{Cancellable, File, MemoryInputStream},
-    StyleContext,
-};
+use gtk::CssProvider;
+use relm4::gtk::{gio::File, StyleContext};
 use relm4::prelude::*;
-
-pub fn embedded_logo(picture: &str) -> Texture {
-    let bytes = std::fs::read(picture).expect("Failed to read image file");
-    let g_bytes = glib::Bytes::from(&bytes);
-    let stream = MemoryInputStream::from_bytes(&g_bytes);
-    let pixbuf = Pixbuf::from_stream(&stream, Cancellable::NONE).unwrap();
-    Texture::for_pixbuf(&pixbuf)
-}
 
 //views
 mod clean;
+use clean::embedded_logo;
 use clean::Clean;
 
 mod process;

@@ -51,6 +51,8 @@ pub fn embedded_logo(picture: &str) -> Texture {
     Texture::for_pixbuf(&pixbuf)
 }
 
+mod clean_cache;
+use clean_cache::Cache;
 /// Struct to hold disk information.
 ///
 /// Contains the total and available disk space in bytes.
