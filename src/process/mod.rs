@@ -7,10 +7,18 @@ use relm4::gtk::{
     glib, StyleContext,
 };
 use relm4::prelude::*;
+use sysinfo::System;
 
-mod process_info; // Importar el módulo process_info
-use process_info::get_processes_info; // Importar la función
+/// This function retrieves the information about a process running on the system.
+pub fn get_process_info() -> Option<ProcessInfo> {
+    let system = System::new_all();
+    system.refresh_all();
 
+    let (pid, process) = system.processes().first();
+
+}
+
+/// This function loads an image from the file system and creates a Texture from it.
 pub fn embedded_logo(picture: &str) -> Texture {
     let bytes = std::fs::read(picture).expect("Failed to read image file");
     let g_bytes = glib::Bytes::from(&bytes);
@@ -19,9 +27,16 @@ pub fn embedded_logo(picture: &str) -> Texture {
     Texture::for_pixbuf(&pixbuf)
 }
 
+/// Struct to hold the info for the process.
+#[derive(Default)]
+struct ProcessInfo {
+    process_name: char,
+}
+
+/// Main struct for the Process component.
 #[derive(Default)]
 pub struct Process {
-    processes: Vec<String>, // Cambiar a una lista de procesos
+    process_info: ProcessInfo,
 }
 
 #[relm4::component(pub)]
@@ -35,7 +50,7 @@ impl SimpleComponent for Process {
         root: Self::Root,
         _sender: relm4::ComponentSender<Self>,
     ) -> relm4::ComponentParts<Self> {
-        let processes = get_processes_info(); // Usar la función para obtener los procesos
+        let processes = get_process_info();
         let model = Process { processes };
 
         let widgets = view_output!();
